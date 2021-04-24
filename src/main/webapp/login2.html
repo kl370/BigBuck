@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+<style>
+body, html {
+  height: 100%;
+  font-family: "Inconsolata", sans-serif;
+}
+
+.bgimg {
+  background-position: center;
+  background-size: cover;
+  background-image: url("image/cover.jpeg");
+  min-height: 30%;
+}
+
+.menu {
+  display: none;
+}
+</style>
+<body>
+
+
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-bottomleft w3-center w3-padding-large w3-hide-small">
+    <span class="w3-tag">demo</span>
+  </div>
+  <div class="w3-display-middle w3-center">
+    <span class="w3-text-white" style="font-size:90px">Big<br>Bucks</span>
+  </div>
+  
+</header>
+
+<!-- Add a background color and large text to the whole page -->
+<div class="w3-sand w3-grayscale w3-large">
+
+<!-- About Container -->
+<div class="w3-container" id="about">
+  <div class="w3-content" style="max-width:700px">
+    <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">Existing User Login</span></h5>
+    
+
+          <form
+            action="doLogin"
+            method="post"
+            name="login"
+            id="login"
+            onsubmit="return (confirminput(login));"
+          >
+            <table>
+              <tr>
+                <td>Username:</td>
+                <td>
+                  <input
+                    type="text"
+                    id="uid"
+                    name="uid"
+                    value=""
+                    style="width: 150px"
+                  />
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Password:</td>
+                <td>
+                  <input
+                    type="password"
+                    id="passw"
+                    name="passw"
+                    style="width: 150px"
+                  />
+                </td>
+              </tr>
+              <tr>
+            
+                <td></td>
+                <td>
+                  <input type="submit" name="btnSubmit" value="Login" />
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+<br><br><br><br>
+        <script type="text/javascript">
+          function setfocus() {
+            if (document.login.uid.value == "") {
+              document.login.uid.focus();
+            } else {
+              document.login.passw.focus();
+            }
+          }
+
+          function confirminput(myform) {
+            if (myform.uid.value.length && myform.passw.value.length) {
+              return true;
+            } else if (!myform.uid.value.length) {
+              myform.reset();
+              myform.uid.focus();
+              alert("You must enter a valid username");
+              return false;
+            } else {
+              myform.passw.focus();
+              alert("You must enter a valid password");
+              return false;
+            }
+          }
+          window.onload = setfocus;
+        </script>
+      </td>
+    
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a id="HyperLink7" href="newUser2.html"
+          >Not an existing user?</a
+    ><br /><br />
+
+
+
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-light-grey w3-padding-48 w3-large">
+
+</footer>
+
+
+
+</body>
+</html>

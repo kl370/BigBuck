@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+<style>
+body, html {
+  height: 100%;
+  font-family: "Inconsolata", sans-serif;
+}
+
+.bgimg {
+  background-position: center;
+  background-size: cover;
+  background-image: url("image/cover.jpeg");
+  min-height: 30%;
+}
+
+.menu {
+  display: none;
+}
+</style>
+<body>
+
+
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-bottomleft w3-center w3-padding-large w3-hide-small">
+    <span class="w3-tag">demo</span>
+  </div>
+  <div class="w3-display-middle w3-center">
+    <span class="w3-text-white" style="font-size:90px">Big<br>Bucks</span>
+  </div>
+  
+</header>
+
+<!-- Add a background color and large text to the whole page -->
+<div class="w3-sand w3-grayscale w3-large">
+
+<!-- About Container -->
+<div class="w3-container" id="about">
+  <div class="w3-content" style="max-width:700px">
+    <br><br>
+    <p>
+        <br /><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <a id="HyperLink7" href="newUser2.html"
+            >Logout</a
+      ><br /><br />
+      <p style="text-align: center;">Submit Orders Here</p>
+      <p><tr>
+        <td>Select order type:</td>
+        <td colspan="2">
+          <select
+            name="cal"
+            class="math"
+            onchange="oncalchange()"
+            tabindex="2"
+          >
+            <option selected>BUY</option>
+            <option>SELL</option>
+  
+          </select>
+        </td>
+      </tr></p>
+      <p><tr>
+        <td>Enter stock id:</td>
+        <td class="math">
+            <input type="text">
+            <input
+            onclick="search()"
+            type="button"
+            value="Search"
+            class="btn"
+            tabindex="3"
+          />
+        </td>
+      </tr></p>
+      <p><tr>
+      <td><label for="x">Enter order size:</label></td>
+      <td class="math">
+        <input type="text">
+      </td>
+      <td class="math">shares</td>
+    </tr></p>
+    
+   
+      <td>&nbsp;</td>
+      <td>
+        <input
+          onclick="submit()"
+          type="button"
+          value="Submit"
+          class="btn"
+          tabindex="3"
+        />
+        <input
+          onclick="clear()"
+          type="Reset"
+          value="Reset"
+          class="btn"
+          tabindex="4"
+        />
+      </td>
+      <td>&nbsp;</td>
+    </tr>   
+
+      
+  <br /><br /><br><br>
+      <a id="HyperLink7" href="index.html"
+          >Back</a
+    >
+  <br /><br />
+      <a id="HyperLink7" href="charting1.html"
+          >Historical Information</a
+    ><br /><br />
+    <a id="HyperLink7" href="charting2.html"
+          >Advanced Charting</a
+    ><br /><br />
+
+
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-light-grey w3-padding-48 w3-large">
+
+</footer>
+
+
+
+
+</body>
+</html>
+
+
