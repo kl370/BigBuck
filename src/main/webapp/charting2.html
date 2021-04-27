@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <style>
 body, html {
   height: 100%;
@@ -84,7 +85,7 @@ body, html {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <td>Enter stock id:</td>
           <td class="math">
-              <input type="text">
+              <input type="text" id="stockname">
               <input
               onclick="search()"
               type="button"
@@ -100,14 +101,16 @@ body, html {
                 <td>Select Graph Type:</td>
                 <td colspan="2">
                   <select
+                          id="graph_type"
                     name="cal"
                     class="math"
-                    onchange="oncalchange()"
+                    onchange="search()"
                     tabindex="2"
                   >
-                    <option selected>Line graph</option>
-                    <option>Scatter plot</option>
-                    <option>Histogram</option>
+                    <option selected value="1">Line graph</option>
+                      <option value="2">Simple return</option>
+                    <option value="3">Scatter plot</option>
+                    <option value="4">Histogram</option>
                   </select>
                 </td>
               </tr>
@@ -120,59 +123,14 @@ body, html {
 
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <input
-    onclick="submit()"
-    type="button"
-    value="Submit"
-    class="btn"
-    tabindex="3"
-  />
+
 
   <br><br>
     
 
       
         <head>
-    <script type="text/javascript">
-      window.onload = function () {
-        var chart = new CanvasJS.Chart("chartContainer", {
-          title: {
-            text: "Historical Stock Price",
-          },
 
-          axisY: {
-            includeZero: false,
-            title: "Price",
-            prefix: "$ ",
-          },
-          axisX: {
-            title: "Date",
-            interval: 1,
-            intervalType: "day",
-            valueFormatString: "MM-DD-YY",
-            labelAngle: -90,
-          },
-          data: [
-            {
-              type: "candlestick",
-              dataPoints: [
-                { x: new Date(2021, 01, 01), y: [5198, 5629, 5159, 5385] },
-                { x: new Date(2021, 01, 02), y: [5366, 5499, 5135, 5295] },
-                { x: new Date(2021, 01, 03), y: [5296, 5378, 5154, 5248] },
-                { x: new Date(2021, 01, 04), y: [5254, 5279, 4788, 4924] },
-                { x: new Date(2021, 01, 05), y: [4910, 5286, 4770, 5278] },
-                { x: new Date(2021, 01, 06), y: [5283, 5348, 5032, 5229] },
-                { x: new Date(2021, 01, 07), y: [5220, 5448, 5164, 5258] },
-                { x: new Date(2021, 01, 08), y: [5276, 5735, 5215, 5703] },
-                { x: new Date(2021, 01, 09), y: [5704, 5815, 4888, 5619] },
-                { x: new Date(2021, 01, 10), y: [5609, 5885, 5548, 5879] },
-              ],
-            },
-          ],
-        });
-        chart.render();
-      };
-    </script>
     <script
       type="text/javascript"
       src="https://canvasjs.com/assets/script/canvasjs.min.js"
@@ -207,6 +165,100 @@ body, html {
 
 
 </body>
+<script>
+    function search(){
+        var stockname = $("#stockname").val();
+        $.getJSON("./search?stockname=" + stockname, function(json){
+            var data = [];
+            var chart_type = ""
+            y_title = ""
+            if ($("#graph_type").val() == "1") {
+                chart_type = "line";
+                y_title = "price"
+                $.each(json, function (k, v) {
+                    var t = {};
+                    t.x = new Date(v.date.year, v.date.month, v.date.dayOfMonth);
+                    t.y = v.adjClose;
+                    data.push(t);
+                });
+            } else if ($("#graph_type").val() == "3") {
+                chart_type = "scatter";
+                var pre = null;
+                var pre_return = null;
+                $.each(json, function (k, v) {
+                    if (!pre) {
+                        pre = v.adjClose;
+                    } else {
+                        var t = {};
+                        t.x = 0;
+                        t.y = (v.adjClose - pre) / pre;
+                        if (!pre_return) {
+                            pre_return = t.y;
+                        } else {
+                            t.x = pre_return;
+                            pre_return = t.y;
+                            data.push(t);
+                        }
+                        pre = v.adjClose;
+                    }
+                });
+            } else if ($("#graph_type").val() == "2") {
+                chart_type = "scatter";
+                var pre = null;
+                $.each(json, function (k, v) {
+                    if (!pre) {
+                        pre = v.adjClose;
+                    } else {
+                        var t = {};
+                        t.x = new Date(v.date.year, v.date.month, v.date.dayOfMonth);
+                        t.y = (v.adjClose - pre) / pre;
+                        data.push(t);
+                        pre = v.adjClose;
+                    }
+                });
+            } else if($("#graph_type").val() == "4") {
+                chart_type = "column";
+                var frequency = {};
+                var pre = null;
+                $.each(json, function (k, v) {
+                    if (!pre) {
+                        pre = v.adjClose;
+                    } else {
+                        var return_rate = (v.adjClose - pre) / pre;
+                        return_rate =  Math.floor(return_rate * 200) + 16;
+                        if (Object.is(NaN, frequency[return_rate])) {
+                            frequency[return_rate] = 1;
+                        } else {
+                            frequency[return_rate] += 1;
+                        }
+                        pre = v.adjClose;
+                    }
+                });
+                for (x in frequency) {
+                    var t = {};
+                    t.x = (x - 16) / 200.0;
+                    t.y = frequency[x];
+                    data.push(t);
+                }
+            }
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: stockname
+                },
+                axisY: {
+                    includeZero: false,
+                    title: y_title
+                },
+                data: [ {
+                    type: chart_type,
+                    dataPoints: data
+                }
+                ]
+            });
+            chart.render();
+        });
+    }
+</script>
 </html>
 
 

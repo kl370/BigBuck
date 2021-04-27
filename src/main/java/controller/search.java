@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
-import static yahoofinance.histquotes.Interval.MONTHLY;
+import static yahoofinance.histquotes.Interval.DAILY;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,7 +28,7 @@ public class search extends HttpServlet{
         from.add(Calendar.YEAR, -1);
 
         Stock stock = YahooFinance.get(stockname);
-        List<HistoricalQuote> past = stock.getHistory(from, to, MONTHLY);
+        List<HistoricalQuote> past = stock.getHistory(from, to, DAILY);
         String json = new Gson().toJson(past);
         resp.getWriter().println(json);
     }
