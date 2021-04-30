@@ -2,6 +2,8 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 public class User {
     private static DB database;
@@ -10,13 +12,12 @@ public class User {
         database = new DB();
         try {
             database.connect("jdbc:mysql://localhost:3306/fintech512project?serverTimezone=UTC");
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             int a = 0;
         }
     }
 
-    public boolean register(String username, String password){
+    public boolean register(String username, String password) {
         boolean result = false;
         try {
             database.executeUpdate("DELETE FROM users WHERE username = '" + username + "';");
@@ -27,7 +28,7 @@ public class User {
             result = false;
             throwables.printStackTrace();
         } finally {
-            database.close();
+            //database.close();
         }
         return result;
     }
@@ -48,13 +49,47 @@ public class User {
         } catch (SQLException var10) {
             result = false;
         } finally {
-            database.close();
+            //database.close();
         }
         return result;
 
     }
-    public static void main() {
+
+    public int GetUserid(String username) {
+        int userid = -1;
+
+        try {
+            ResultSet resultset = database.executeQuery("select * from users where username = '" + username + "';");
+            if (!resultset.next()) {
+                System.out.println("no result");
+            } else {
+                userid = resultset.getInt("userid");
+            }
+        } catch (SQLException var10) {
+
+        } finally {
+            //database.close();
+        }
+        return userid;
 
     }
+
+    public Dictionary<String, Integer> GetStocks(int userid) {
+        Dictionary<String, Integer> stocks = new Hashtable<String, Integer>();
+        try {
+            ResultSet resultset = database.executeQuery("select * from Assets where UserID = " + userid + ";");
+            while (resultset.next()) {
+                String stock = resultset.getString("Asset");
+                int sharesize = resultset.getInt("Sharesize");
+                stocks.put(stock, sharesize);
+            }
+        } catch (SQLException var10) {
+
+        } finally {
+            //database.close();
+        }
+        return stocks;
+    }
 }
+
 

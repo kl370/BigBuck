@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <style>
 body, html {
   height: 100%;
@@ -62,13 +63,13 @@ body, html {
         <td>Select order type:</td>
         <td colspan="2">
           <select
+                  id="action"
             name="cal"
             class="math"
-            onchange="oncalchange()"
             tabindex="2"
           >
-            <option selected>BUY</option>
-            <option>SELL</option>
+            <option selected value="1">BUY</option>
+            <option value="2">SELL</option>
   
           </select>
         </td>
@@ -76,20 +77,14 @@ body, html {
       <p><tr>
         <td>Enter stock id:</td>
         <td class="math">
-            <input type="text">
-            <input
-            onclick="search()"
-            type="button"
-            value="Search"
-            class="btn"
-            tabindex="3"
-          />
+            <input id="stockname" type="text">
         </td>
       </tr></p>
       <p><tr>
-      <td><label for="x">Enter order size:</label></td>
+      <td><label>Enter order size:</label></td>
       <td class="math">
-        <input type="text">
+        <input id="sharesize" type="text">
+
       </td>
       <td class="math">shares</td>
     </tr></p>
@@ -117,7 +112,7 @@ body, html {
 
       
   <br /><br /><br><br>
-      <a id="HyperLink7" href="index.html"
+      <a id="HyperLink7" href="index.jsp"
           >Back</a
     >
   <br /><br />
@@ -141,6 +136,28 @@ body, html {
 
 
 </body>
+<script>
+    function submit() {
+        var action = "buy";
+        var k = $("#action").val()
+        if ($("#action").val() != "1") {
+            action = "sell";
+        }
+        var stockname = $("#stockname").val();
+        var sharesize = $("#sharesize").val();
+        $.getJSON("./transact?action=" + action + "&stockname=" + stockname + "&sharesize=" + sharesize, function(json) {
+            if (json.ret == 0) {
+                alert("Successful!");
+            } else {
+                alert("Failed");
+            }
+        });
+    }
+    function clear() {
+        $("#stockname").val("");
+        $("#sharesize").val("");
+    }
+</script>
 </html>
 
 

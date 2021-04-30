@@ -27,8 +27,7 @@ public class register extends HttpServlet {
             User user = new User();
             boolean ret = user.register(username, passwd);
             if (ret) {
-                resp.getWriter().println("Successful registration");
-                //resp.sendRedirect("index.html");
+                resp.sendRedirect("login2.html");
             }else {
                 resp.getWriter().println("Failed registration");
             }
